@@ -4,7 +4,7 @@ using UnityEngine;
 using Assets.Scripts.Stacks;
 using Assets.Scripts.Stacks.Blocks;
 
-namespace Assets.GameAssets.Scripts
+namespace Assets.Scripts.Blocks.Detail
 {
     public class BlockDetailPanel : MonoBehaviour, IDisposable
     {

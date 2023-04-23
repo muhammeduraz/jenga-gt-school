@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using Assets.Scripts.Inputs;
 
-namespace Assets.GameAssets.Scripts
+namespace Assets.Scripts.Cameras
 {
     public class CameraHandler : MonoBehaviour, IDisposable
     {

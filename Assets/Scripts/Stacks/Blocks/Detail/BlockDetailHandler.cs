@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.Stacks;
+using Assets.Scripts.Inputs;
+using Assets.Scripts.Raycasts;
 using Assets.Scripts.Stacks.Blocks;
 
-namespace Assets.GameAssets.Scripts
+namespace Assets.Scripts.Blocks.Detail
 {
     public class BlockDetailHandler : MonoBehaviour, IDisposable
     {
@@ -12,17 +14,13 @@ namespace Assets.GameAssets.Scripts
         private Camera _camera;
         private RaycastOperations _raycastOperations;
 
+        private BlockHandler _currentBlockHandler;
+
         public InputHandler _inputHandler;
 
         [SerializeField] private BlockDetailPanel _blockDetailPanel;
 
         #endregion Variables
-
-        #region Properties
-
-
-
-        #endregion Properties
 
         #region Unity Functions
 
@@ -72,6 +70,7 @@ namespace Assets.GameAssets.Scripts
             BlockHandler blockHandler = _raycastOperations.GetObjectOfType<BlockHandler>(inputData.screenPosition);
 
             if (blockHandler == null) return;
+            if (blockHandler == _currentBlockHandler) _blockDetailPanel.Disappear();
 
             Vector3 position = blockHandler.transform.position + (_camera.transform.position - blockHandler.transform.position).normalized * 1f;
             Quaternion rotation = Quaternion.LookRotation((position - _camera.transform.position).normalized);
@@ -81,9 +80,9 @@ namespace Assets.GameAssets.Scripts
 
         private void Disappear(InputData inputData)
         {
-            BlockHandler blockHandler = _raycastOperations.GetObjectOfType<BlockHandler>(inputData.screenPosition);
+            _currentBlockHandler = _raycastOperations.GetObjectOfType<BlockHandler>(inputData.screenPosition);
 
-            if (blockHandler != null) return;
+            if (_currentBlockHandler != null) return;
 
             _blockDetailPanel.Disappear();
         }

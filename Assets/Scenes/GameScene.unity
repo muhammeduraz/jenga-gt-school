@@ -169,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _blockDataSO: {fileID: 11400000, guid: d9d86dcae1737417ea1755bb241a892f, type: 2}
   _stackPrefab: {fileID: 1207294596565680905, guid: 181540943e8da4e97afb8aeecdea3f86, type: 3}
+  _stackManagerPrefab: {fileID: 3866957188900971260, guid: b3423e61625214b388117ceb749c2e4d, type: 3}
 --- !u!1 &414537570
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +388,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 818843791}
-  - {fileID: 1658414508}
   m_Father: {fileID: 2043062070}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -734,12 +734,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658414507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -206.5, y: -116, z: 0}
+  m_LocalPosition: {x: -206.5, y: -113.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 915741573}
-  m_RootOrder: -1
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1658414509
 MonoBehaviour:

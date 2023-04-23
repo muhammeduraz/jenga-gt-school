@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets.GameAssets.Scripts
+namespace Assets.Scripts.Inputs
 {
     public class InputHandler : MonoBehaviour, IDisposable
     {

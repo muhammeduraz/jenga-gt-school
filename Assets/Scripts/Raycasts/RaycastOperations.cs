@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Assets.GameAssets.Scripts
+namespace Assets.Scripts.Raycasts
 {
     public class RaycastOperations
     {

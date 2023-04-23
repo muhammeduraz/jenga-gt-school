@@ -14,6 +14,7 @@ namespace Assets.Scripts.Stacks
 
         [SerializeField] private BlockDataSO _blockDataSO;
         [SerializeField] private StackHandler _stackPrefab;
+        [SerializeField] private StackManager _stackManagerPrefab;
 
         #endregion Variables
 
@@ -77,6 +78,9 @@ namespace Assets.Scripts.Stacks
             Stack loopStack = null;
             Block loopBlock = null;
 
+            StackManager stackManager = Instantiate(_stackManagerPrefab, null);
+            stackManager.Initialize();
+
             StackHandler tempStackHandler = null;
             BlockHandler tempBlockHandler = null;
 
@@ -86,10 +90,12 @@ namespace Assets.Scripts.Stacks
 
                 if (loopStack != null)
                 {
-                    tempStackHandler = Instantiate(_stackPrefab, transform, true);
+                    tempStackHandler = Instantiate(_stackPrefab, stackManager.transform, true);
                     SetStackPosition(Vector3.right, i, 5f, tempStackHandler);
                     tempStackHandler.Stack = loopStack;
                     tempStackHandler.Initialize();
+
+                    stackManager.AddStack(tempStackHandler);
 
                     for (int j = 0; j < loopStack.BlockList.Count; j++)
                     {
@@ -113,6 +119,8 @@ namespace Assets.Scripts.Stacks
                     tempStackHandler.InitializeBlocks();
                 }
             }
+
+            stackManager.CreateStackUIElements();
         }
 
         #endregion Functions
