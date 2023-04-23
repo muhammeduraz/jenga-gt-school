@@ -11,11 +11,11 @@ namespace Assets.Scripts.Stacks
         public string subject;
         public string grade;
         public int mastery;
-        public string domainid;
+        public string domainId;
         public string domain;
         public string cluster;
-        public string standardid;
-        public string standarddescription;
+        public string standardId;
+        public string standardDescription;
 
         #endregion Variables
 
@@ -28,11 +28,11 @@ namespace Assets.Scripts.Stacks
                 $"subject: {subject}\n" +
                 $"grade: {grade}\n" +
                 $"mastery: {mastery}\n" +
-                $"domainid: {domainid}\n" +
+                $"domainid: {domainId}\n" +
                 $"domain: {domain}\n" +
                 $"cluster: {cluster}\n" +
-                $"standardid: {standardid}\n" +
-                $"standarddescription: {standarddescription}\n";
+                $"standardid: {standardId}\n" +
+                $"standarddescription: {standardDescription}\n";
         }
 
         #endregion Functions

@@ -12,8 +12,8 @@ namespace Assets.GameAssets.Scripts
         public Action<InputData> OnLeftFingerUpdate;
         //public Action<InputData> OnLeftFingerUp;
 
-        public Action<InputData> OnRightFingerDown;
-        public Action<InputData> OnRightFinger;
+        //public Action<InputData> OnRightFingerDown;
+        //public Action<InputData> OnRightFinger;
         public Action<InputData> OnRightFingerUp;
 
         #endregion Events
@@ -87,14 +87,14 @@ namespace Assets.GameAssets.Scripts
             //{
             //    OnRightFingerDown?.Invoke(_inputData);
             //}
-            if (Input.GetMouseButton(1))
-            {
-                OnRightFinger?.Invoke(_inputData);
-            }
-            //else if (Input.GetMouseButtonUp(1))
+            //else if (Input.GetMouseButton(1))
             //{
-            //    OnRightFingerUp?.Invoke(_inputData);
+            //    OnRightFinger?.Invoke(_inputData);
             //}
+            if (Input.GetMouseButtonUp(1))
+            {
+                OnRightFingerUp?.Invoke(_inputData);
+            }
 
             OnLeftFingerUpdate?.Invoke(_inputData);
 
