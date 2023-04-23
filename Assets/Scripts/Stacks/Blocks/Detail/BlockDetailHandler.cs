@@ -56,12 +56,10 @@ namespace Assets.Scripts.Blocks.Detail
             if (subscribe)
             {
                 _inputHandler.OnRightFingerUp += Appear;
-                _inputHandler.OnRightFingerUp += Disappear;
             }
             else if (!subscribe)
             {
                 _inputHandler.OnRightFingerUp -= Appear;
-                _inputHandler.OnRightFingerUp -= Disappear;
             }
         }
 
@@ -69,22 +67,25 @@ namespace Assets.Scripts.Blocks.Detail
         {
             BlockHandler blockHandler = _raycastOperations.GetObjectOfType<BlockHandler>(inputData.screenPosition);
 
-            if (blockHandler == null) return;
-            if (blockHandler == _currentBlockHandler) _blockDetailPanel.Disappear();
+            if (blockHandler == null)
+            {
+                _blockDetailPanel.Disappear();
+                _currentBlockHandler = null;
+                return;
+            }
+
+            if (blockHandler == _currentBlockHandler)
+            {
+                _blockDetailPanel.Disappear();
+                _currentBlockHandler = null;
+                return;
+            }
 
             Vector3 position = blockHandler.transform.position + (_camera.transform.position - blockHandler.transform.position).normalized * 1f;
             Quaternion rotation = Quaternion.LookRotation((position - _camera.transform.position).normalized);
 
+            _currentBlockHandler = blockHandler;
             _blockDetailPanel.Appear(blockHandler.Block, position, rotation);
-        }
-
-        private void Disappear(InputData inputData)
-        {
-            _currentBlockHandler = _raycastOperations.GetObjectOfType<BlockHandler>(inputData.screenPosition);
-
-            if (_currentBlockHandler != null) return;
-
-            _blockDetailPanel.Disappear();
         }
 
         #endregion Functions

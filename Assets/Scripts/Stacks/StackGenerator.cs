@@ -60,12 +60,12 @@ namespace Assets.Scripts.Stacks
 
         private void SetBlockPositionAndRotation(Vector3 center, int j, BlockHandler blockHandler)
         {
-            Quaternion rot = Quaternion.Euler(Vector3.up * 90f * ((j / 3) % 2));
+            Quaternion rot = Quaternion.Euler(((j / 3) % 2) * 90f * Vector3.up);
             blockHandler.transform.rotation = rot;
 
             Vector3 pos = center;
-            pos += blockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * 0.05f + blockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * blockHandler.BoxCollider.bounds.size.x;
-            pos += Vector3.up * (j / 3) * blockHandler.BoxCollider.bounds.size.y;
+            pos += (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * 0.05f * Mathf.Pow(-1, (j % 3)) * blockHandler.transform.right + blockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * blockHandler.BoxCollider.bounds.size.x;
+            pos += (j / 3) * blockHandler.BoxCollider.bounds.size.y * Vector3.up;
 
             blockHandler.transform.position = pos;
         }

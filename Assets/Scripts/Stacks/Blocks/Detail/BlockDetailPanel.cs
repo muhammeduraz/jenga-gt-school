@@ -1,6 +1,7 @@
 using TMPro;
 using System;
 using UnityEngine;
+using DG.Tweening;
 using Assets.Scripts.Stacks;
 using Assets.Scripts.Stacks.Blocks;
 
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Blocks.Detail
         #region Variables
 
         private Block _block;
+        private Tween _scaleTween;
 
         [SerializeField] private TextMeshProUGUI _gradeLevelText;
         [SerializeField] private TextMeshProUGUI _clusterText;
@@ -40,12 +42,22 @@ namespace Assets.Scripts.Blocks.Detail
             _clusterText.text = _block.cluster;
             _standardIDText.text = _block.standardId + ": " + _block.standardDescription;
 
+            transform.localScale = Vector3.zero;
             gameObject.SetActive(true);
+
+            _scaleTween?.Kill();
+            _scaleTween = transform.DOScale(1f, 0.25f).SetEase(Ease.OutBack);
         }
 
         public void Disappear()
         {
-            gameObject.SetActive(false);
+            _scaleTween?.Kill();
+            _scaleTween = transform.DOScale(0f, 0.25f).SetEase(Ease.InBack);
+
+            _scaleTween.OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+            });
         }
 
         public void Dispose()
