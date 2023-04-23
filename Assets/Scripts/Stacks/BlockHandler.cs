@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Stacks
@@ -5,6 +7,9 @@ namespace Assets.Scripts.Stacks
     public class BlockHandler : MonoBehaviour
     {
         #region Variables
+
+        [SerializeField] private TextMeshPro _textLeft;
+        [SerializeField] private TextMeshPro _textRight;
 
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Rigidbody _rigidbody;
@@ -26,11 +31,6 @@ namespace Assets.Scripts.Stacks
 
         #region Unity Functions
 
-        private void Awake()
-        {
-            Initialize();
-        }
-
         private void OnDestroy()
         {
             Dispose();
@@ -40,14 +40,56 @@ namespace Assets.Scripts.Stacks
 
         #region Functions
 
-        private void Initialize()
+        public void Initialize()
         {
-            
+            SetName();
+            SetupBlock();
         }
 
         private void Dispose()
         {
             
+        }
+
+        private void SetName()
+        {
+            name = $"Block_{_block.id}";
+        }
+
+        private void SetText(string text)
+        {
+            _textLeft.text = text;
+            _textRight.text = text;
+        }
+
+        public void SetupBlock()
+        {
+            switch (_block.mastery)
+            {
+                case 0:
+                    SetText("Not Learned");
+                    SetText("Not Learned");
+                    break;
+                case 1:
+                    SetText("Learned");
+                    SetText("Learned");
+                    break;
+                case 2:
+                    SetText("Mastered");
+                    SetText("Mastered");
+                    break;
+                default:
+                    SetText("None");
+                    SetText("None");
+                    break;
+            }
+        }
+
+        public void SetPhysic(bool activate)
+        {
+            if (_rigidbody == null) return;
+
+            _rigidbody.isKinematic = !activate;
         }
 
         #endregion Functions

@@ -50,6 +50,24 @@ namespace Assets.Scripts.Stacks
             _apiHelper = null;
         }
 
+        private void SetStackPosition(Vector3 direction, int multiplier, float amount, StackHandler stackHandler)
+        {
+            Vector3 stackPos = direction * amount * multiplier;
+            stackHandler.transform.position = stackPos;
+        }
+
+        private void SetBlockPositionAndRotation(Vector3 center, int j, BlockHandler blockHandler)
+        {
+            Quaternion rot = Quaternion.Euler(Vector3.up * 90f * ((j / 3) % 2));
+            blockHandler.transform.rotation = rot;
+
+            Vector3 pos = center;
+            pos += blockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * 0.05f + blockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * blockHandler.BoxCollider.bounds.size.x;
+            pos += Vector3.up * (j / 3) * blockHandler.BoxCollider.bounds.size.y;
+
+            blockHandler.transform.position = pos;
+        }
+
         private IEnumerator GenerateStacks()
         {
             yield return _apiHelper.GetStackList();
@@ -68,8 +86,9 @@ namespace Assets.Scripts.Stacks
                 if (loopStack != null)
                 {
                     tempStackHandler = Instantiate(_stackPrefab, transform, true);
+                    SetStackPosition(Vector3.right, i, 5f, tempStackHandler);
                     tempStackHandler.Stack = loopStack;
-                    tempStackHandler.name = loopStack.Grade;
+                    tempStackHandler.Initialize();
 
                     for (int j = 0; j < loopStack.BlockList.Count; j++)
                     {
@@ -83,29 +102,14 @@ namespace Assets.Scripts.Stacks
                             {
                                 tempBlockHandler = Instantiate(tempBlockHandler, tempStackHandler.transform, true);
                                 tempBlockHandler.Block = loopBlock;
-                                tempBlockHandler.name = $"Block_{loopBlock.id}";
-
-                                //Vector3 rot = ((j / 3) % 2) * 90f * Vector3.up;
-                                //tempBlockHandler.transform.rotation = Quaternion.Euler(rot);
-
-                                //Vector3 pos = Vector3.right * (5 * (i + 1));
-                                //pos += tempBlockHandler.BoxCollider.bounds.size.x * (j % 3) * tempBlockHandler.transform.right;
-                                //pos += tempBlockHandler.BoxCollider.bounds.size.y * (j / 3) * tempBlockHandler.transform.up;
-
-                                //if (rot.y > 89f)
-                                //    pos +=  Vector3.right * tempBlockHandler.BoxCollider.bounds.size.x / 2f;
-
-                                Quaternion rot = Quaternion.Euler(Vector3.up * 90f * ((j / 3) % 2));
-                                tempBlockHandler.transform.rotation = rot;
-
-                                Vector3 pos = Vector3.right * 10 * i;
-                                pos += tempBlockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * 0.05f + tempBlockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * tempBlockHandler.BoxCollider.bounds.size.x;
-                                pos += Vector3.up * (j / 3) * tempBlockHandler.BoxCollider.bounds.size.y;
-
-                                tempBlockHandler.transform.position = pos;
+                                SetBlockPositionAndRotation(tempStackHandler.transform.position, j, tempBlockHandler);
+                                
+                                tempStackHandler.AddBlock(tempBlockHandler);
                             }
                         }
                     }
+
+                    tempStackHandler.InitializeBlocks();
                 }
             }
         }

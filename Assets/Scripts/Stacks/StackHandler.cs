@@ -1,10 +1,16 @@
+using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Stacks
 {
     public class StackHandler : MonoBehaviour
     {
         #region Variables
+
+        private List<BlockHandler> _blockHandlerList;
+
+        [SerializeField] private TextMeshPro _gradeText;
 
         [SerializeField] private Stack _stack;
 
@@ -20,7 +26,7 @@ namespace Assets.Scripts.Stacks
 
         private void Awake()
         {
-            Initialize();
+
         }
 
         private void OnDestroy()
@@ -32,14 +38,67 @@ namespace Assets.Scripts.Stacks
 
         #region Functions
 
-        private void Initialize()
+        public void Initialize()
         {
-            
+            SetName();
+            SetGradeText();
+
+            _blockHandlerList = new List<BlockHandler>();
         }
 
         private void Dispose()
         {
-            
+            _blockHandlerList = null;
+            _gradeText = null;
+            _stack = null;
+        }
+
+        private void SetName()
+        {
+            name = _stack.Grade;
+        }
+
+        private void SetGradeText()
+        {
+            if (_stack != null)
+            {
+                _gradeText.text = _stack.Grade;
+            }
+        }
+
+        public void AddBlock(BlockHandler blockHandler)
+        {
+            _blockHandlerList.Add(blockHandler);
+        }
+
+        public void InitializeBlocks()
+        {
+            BlockHandler blockHandler = null;
+
+            for (int i = 0; i < _blockHandlerList.Count; i++)
+            {
+                blockHandler = _blockHandlerList[i];
+
+                if (blockHandler != null)
+                {
+                    blockHandler.Initialize();
+                }
+            }
+        }
+
+        public void SetPhysic(bool activate)
+        {
+            BlockHandler blockHandler = null;
+
+            for (int i = 0; i < _blockHandlerList.Count; i++)
+            {
+                blockHandler = _blockHandlerList[i];
+
+                if (blockHandler != null)
+                {
+                    blockHandler.SetPhysic(activate);
+                }
+            }
         }
 
         #endregion Functions
