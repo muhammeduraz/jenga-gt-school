@@ -1,10 +1,10 @@
-using System;
 using TMPro;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Stacks
 {
-    public class BlockHandler : MonoBehaviour
+    public class BlockHandler : MonoBehaviour, IDisposable
     {
         #region Variables
 
@@ -46,9 +46,16 @@ namespace Assets.Scripts.Stacks
             SetupBlock();
         }
 
-        private void Dispose()
+        public void Dispose()
         {
-            
+            _textLeft = null;
+            _textRight = null;
+
+            _renderer = null;
+            _renderer = null;
+            _boxCollider = null;
+
+            _block = null;
         }
 
         private void SetName()

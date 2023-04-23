@@ -1,10 +1,11 @@
 using TMPro;
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Stacks
 {
-    public class StackHandler : MonoBehaviour
+    public class StackHandler : MonoBehaviour, IDisposable
     {
         #region Variables
 
@@ -24,11 +25,6 @@ namespace Assets.Scripts.Stacks
 
         #region Unity Functions
 
-        private void Awake()
-        {
-
-        }
-
         private void OnDestroy()
         {
             Dispose();
@@ -46,7 +42,7 @@ namespace Assets.Scripts.Stacks
             _blockHandlerList = new List<BlockHandler>();
         }
 
-        private void Dispose()
+        public void Dispose()
         {
             _blockHandlerList = null;
             _gradeText = null;
