@@ -7,6 +7,7 @@ namespace Assets.Scripts.Stacks
         #region Variables
 
         [SerializeField] private Renderer _renderer;
+        [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private BoxCollider _boxCollider;
 
         [SerializeField] private Block _block;
@@ -15,6 +16,8 @@ namespace Assets.Scripts.Stacks
 
         #region Properties
 
+        public Renderer Renderer { get => _renderer; }
+        public Rigidbody Rigidbody { get => _rigidbody; }
         public BoxCollider BoxCollider { get => _boxCollider; }
 
         public Block Block { get => _block; set => _block = value; }

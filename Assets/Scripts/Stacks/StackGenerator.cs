@@ -11,7 +11,7 @@ namespace Assets.Scripts.Stacks
 
         private APIHelper _apiHelper;
 
-        [SerializeField] private BlockHandler _blockPrefab;
+        [SerializeField] private BlockDataSO _blockDataSO;
         [SerializeField] private StackHandler _stackPrefab;
 
         #endregion Variables
@@ -77,10 +77,33 @@ namespace Assets.Scripts.Stacks
 
                         if (loopBlock != null)
                         {
-                            tempBlockHandler = Instantiate(_blockPrefab, tempStackHandler.transform, true);
-                            tempBlockHandler.Block = loopBlock;
-                            tempBlockHandler.name = $"Block_{loopBlock.id}";
-                            tempBlockHandler.transform.position = 2f * i * Vector3.right + Vector3.up * j *  tempBlockHandler.BoxCollider.bounds.size.y;
+                            tempBlockHandler = _blockDataSO.GetBlockHandlerByMastery(loopBlock.mastery);
+
+                            if(tempBlockHandler != null)
+                            {
+                                tempBlockHandler = Instantiate(tempBlockHandler, tempStackHandler.transform, true);
+                                tempBlockHandler.Block = loopBlock;
+                                tempBlockHandler.name = $"Block_{loopBlock.id}";
+
+                                //Vector3 rot = ((j / 3) % 2) * 90f * Vector3.up;
+                                //tempBlockHandler.transform.rotation = Quaternion.Euler(rot);
+
+                                //Vector3 pos = Vector3.right * (5 * (i + 1));
+                                //pos += tempBlockHandler.BoxCollider.bounds.size.x * (j % 3) * tempBlockHandler.transform.right;
+                                //pos += tempBlockHandler.BoxCollider.bounds.size.y * (j / 3) * tempBlockHandler.transform.up;
+
+                                //if (rot.y > 89f)
+                                //    pos +=  Vector3.right * tempBlockHandler.BoxCollider.bounds.size.x / 2f;
+
+                                Quaternion rot = Quaternion.Euler(Vector3.up * 90f * ((j / 3) % 2));
+                                tempBlockHandler.transform.rotation = rot;
+
+                                Vector3 pos = Vector3.right * 10 * i;
+                                pos += tempBlockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * 0.05f + tempBlockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * tempBlockHandler.BoxCollider.bounds.size.x;
+                                pos += Vector3.up * (j / 3) * tempBlockHandler.BoxCollider.bounds.size.y;
+
+                                tempBlockHandler.transform.position = pos;
+                            }
                         }
                     }
                 }
