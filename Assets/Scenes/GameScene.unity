@@ -919,6 +919,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockDetailPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 7681970451595411955, guid: c32feb96f308a43118fe4f2ef2360ee8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

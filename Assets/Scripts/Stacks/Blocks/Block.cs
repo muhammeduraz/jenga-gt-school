@@ -1,6 +1,6 @@
 using System;
 
-namespace Assets.Scripts.Stacks
+namespace Assets.Scripts.Stacks.Blocks
 {
     [Serializable]
     public class Block

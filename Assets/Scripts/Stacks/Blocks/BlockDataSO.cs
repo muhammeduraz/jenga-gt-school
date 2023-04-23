@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Stacks
+namespace Assets.Scripts.Stacks.Blocks
 {
     [CreateAssetMenu(fileName = "BlockDataSO", menuName = "ScriptableObjects/BlockDataSO", order = 1)]
     public class BlockDataSO : ScriptableObject

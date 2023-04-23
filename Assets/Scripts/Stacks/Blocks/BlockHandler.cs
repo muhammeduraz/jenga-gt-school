@@ -2,7 +2,7 @@ using TMPro;
 using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Stacks
+namespace Assets.Scripts.Stacks.Blocks
 {
     public class BlockHandler : MonoBehaviour, IDisposable
     {

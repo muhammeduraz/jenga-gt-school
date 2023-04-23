@@ -2,6 +2,7 @@ using TMPro;
 using System;
 using UnityEngine;
 using Assets.Scripts.Stacks;
+using Assets.Scripts.Stacks.Blocks;
 
 namespace Assets.GameAssets.Scripts
 {
@@ -10,7 +11,6 @@ namespace Assets.GameAssets.Scripts
         #region Variables
 
         private Block _block;
-        //private Tween _scaleTween;
 
         [SerializeField] private TextMeshProUGUI _gradeLevelText;
         [SerializeField] private TextMeshProUGUI _clusterText;

@@ -5,6 +5,7 @@ using System.Collections;
 using Assets.Scripts.Stacks;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using Assets.Scripts.Stacks.Blocks;
 using Stack = Assets.Scripts.Stacks.Stack;
 
 namespace Assets.Scripts.API
