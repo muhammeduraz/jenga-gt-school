@@ -102,7 +102,6 @@ namespace Assets.Scripts.Cameras
         {
             _movementTween?.Kill();
             _movementTween = center.DOMove(stackHandler.transform.position + stackMovementOffset, 1f);
-            //_movementTween = center.DOMove(stackHandler.transform.position, 1f).SetUpdate(UpdateType.Late);
         }
 
         #endregion Functions

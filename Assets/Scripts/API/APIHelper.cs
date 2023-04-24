@@ -20,26 +20,7 @@ namespace Assets.Scripts.API
 
         #endregion Variables
 
-        //#region Unity Functions
-
-        //private void Awake()
-        //{
-        //    StartCoroutine(GetStackList());
-        //}
-
-        //#endregion Unity Functions
-
         #region Functions
-
-        public IEnumerator GetBlockList()
-        {
-            using UnityWebRequest webRequest = UnityWebRequest.Get(URL);
-            yield return webRequest.SendWebRequest();
-
-            string rawJson = Encoding.Default.GetString(webRequest.downloadHandler.data);
-
-            List<Block> blockList = JsonConvert.DeserializeObject<List<Block>>(rawJson);
-        }
 
         public IEnumerator GetStackList()
         {
@@ -90,20 +71,6 @@ namespace Assets.Scripts.API
 
             return null;
         }
-
-        //private void Test()
-        //{
-        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://ga1vqcu3o1.execute-api.us-east-1.amazonaws.com/Assessment/stack");
-        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        //    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-        //    {
-        //        string json = reader.ReadToEnd();
-        //        Debug.LogError(json);
-        //    }
-
-
-        //    //return JsonUtility.FromJson<>(json);
-        //}
 
         #endregion Functions
     }

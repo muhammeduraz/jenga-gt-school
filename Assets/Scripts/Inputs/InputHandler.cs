@@ -3,17 +3,13 @@ using UnityEngine;
 
 namespace Assets.Scripts.Inputs
 {
-    public class InputHandler : MonoBehaviour, IDisposable
+    public class InputHandler : MonoBehaviour
     {
         #region Events
 
-        //public Action<InputData> OnLeftFingerDown;
         public Action<InputData> OnLeftFinger;
         public Action<InputData> OnLeftFingerUpdate;
-        //public Action<InputData> OnLeftFingerUp;
 
-        //public Action<InputData> OnRightFingerDown;
-        //public Action<InputData> OnRightFinger;
         public Action<InputData> OnRightFingerUp;
 
         #endregion Events
@@ -36,61 +32,25 @@ namespace Assets.Scripts.Inputs
 
         #region Unity Functions
 
-        private void Awake()
-        {
-            Initialize();
-        }
-
         private void Update()
         {
             UpdateInput();
-        }
-
-        private void OnDestroy()
-        {
-            Dispose();
         }
 
         #endregion Unity Functions
 
         #region Functions
 
-        private void Initialize()
-        {
-
-        }
-
-        public void Dispose()
-        {
-
-        }
-
         private void UpdateInput()
         {
             _inputData.screenPosition = Input.mousePosition;
             _inputData.mouseScrollDelta = Input.mouseScrollDelta;
 
-            //if (Input.GetMouseButtonDown(0))
-            //{
-            //    OnLeftFingerDown?.Invoke(_inputData);
-            //}
             if (Input.GetMouseButton(0))
             {
                 OnLeftFinger?.Invoke(_inputData);
             }
-            //else if (Input.GetMouseButtonUp(0))
-            //{
-            //    OnLeftFingerUp?.Invoke(_inputData);
-            //}
 
-            //if (Input.GetMouseButtonDown(1))
-            //{
-            //    OnRightFingerDown?.Invoke(_inputData);
-            //}
-            //else if (Input.GetMouseButton(1))
-            //{
-            //    OnRightFinger?.Invoke(_inputData);
-            //}
             if (Input.GetMouseButtonUp(1))
             {
                 OnRightFingerUp?.Invoke(_inputData);

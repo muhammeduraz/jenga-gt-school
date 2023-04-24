@@ -11,7 +11,6 @@ namespace Assets.Scripts.Stacks.Blocks
         [SerializeField] private TextMeshPro _textLeft;
         [SerializeField] private TextMeshPro _textRight;
 
-        [SerializeField] private Renderer _renderer;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private BoxCollider _boxCollider;
 
@@ -21,7 +20,6 @@ namespace Assets.Scripts.Stacks.Blocks
 
         #region Properties
 
-        public Renderer Renderer { get => _renderer; }
         public Rigidbody Rigidbody { get => _rigidbody; }
         public BoxCollider BoxCollider { get => _boxCollider; }
 
@@ -51,8 +49,6 @@ namespace Assets.Scripts.Stacks.Blocks
             _textLeft = null;
             _textRight = null;
 
-            _renderer = null;
-            _renderer = null;
             _boxCollider = null;
 
             _block = null;
