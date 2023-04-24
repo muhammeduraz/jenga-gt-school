@@ -11,6 +11,7 @@ namespace Assets.Scripts.Stacks
     {
         #region Variables
 
+        private StackGenerator _stackGenerator;
         private List<BlockHandler> _blockHandlerList;
 
         [SerializeField] private TextMeshPro _gradeText;
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Stacks
         #region Properties
 
         public Stack Stack { get => _stack; set => _stack = value; }
+        public StackGenerator StackGenerator { get => _stackGenerator; set => _stackGenerator = value; }
 
         #endregion Properties
 
@@ -84,7 +86,22 @@ namespace Assets.Scripts.Stacks
             }
         }
 
-        public void SetPhysic(bool activate)
+        private void RemoveGlassBlocks()
+        {
+            BlockHandler blockHandler = null;
+
+            for (int i = 0; i < _blockHandlerList.Count; i++)
+            {
+                blockHandler = _blockHandlerList[i];
+
+                if (blockHandler != null && blockHandler.Block.mastery == 0)
+                {
+                    blockHandler.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void SetPhysic(bool activate)
         {
             BlockHandler blockHandler = null;
 
@@ -97,6 +114,20 @@ namespace Assets.Scripts.Stacks
                     blockHandler.SetPhysic(activate);
                 }
             }
+        }
+
+        public void ActivateTestMyStack()
+        {
+            RemoveGlassBlocks();
+            SetPhysic(true);
+        }
+
+        public void ResetStack()
+        {
+            _blockHandlerList.ForEach(block => Destroy(block.gameObject));
+            _blockHandlerList.Clear();
+
+            StackGenerator.GenerateStack(this);
         }
 
         #endregion Functions

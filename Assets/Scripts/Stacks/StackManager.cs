@@ -10,12 +10,19 @@ namespace Assets.Scripts.Stacks
     {
         #region Variables
 
+        private StackHandler _currentStackHandler;
         private List<StackHandler> _stackHandlerList;
 
         [SerializeField] private StackUIHandler _stackUIHandler;
         [SerializeField] private StackGenerator _stackGenerator;
 
         #endregion Variables
+
+        #region Properties
+
+        public StackHandler CurrentStackHandler { get => _currentStackHandler; set => _currentStackHandler = value; }
+
+        #endregion Properties
 
         #region Unity Functions
 
@@ -41,6 +48,12 @@ namespace Assets.Scripts.Stacks
             StartCoroutine(_stackGenerator.GenerateStacks(this));
         }
 
+        public void LateInitialize()
+        {
+            _currentStackHandler = _stackHandlerList[0];
+            _stackUIHandler.CreateStackUIElements(_stackHandlerList);
+        }
+
         public void Dispose()
         {
 
@@ -51,11 +64,6 @@ namespace Assets.Scripts.Stacks
             if (stackHandler == null) return;
 
             _stackHandlerList.Add(stackHandler);
-        }
-
-        public void CreateStackUIElements()
-        {
-            _stackUIHandler.CreateStackUIElements(_stackHandlerList);
         }
 
         #endregion Functions

@@ -11,6 +11,7 @@ namespace Assets.Scripts.Stacks.UI
 
         private CameraHandler _cameraHandler;
 
+        [SerializeField] private StackManager _stackManager;
         [SerializeField] private StackUIGenerator _stackUIGenerator;
 
         #endregion Variables
@@ -48,6 +49,7 @@ namespace Assets.Scripts.Stacks.UI
 
         public void MoveCamera(StackHandler stackHandler)
         {
+            _stackManager.CurrentStackHandler = stackHandler;
             _cameraHandler.MoveToStack(stackHandler);
         }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Assets.Scripts.API;
 using System.Collections;
@@ -7,11 +8,13 @@ using Assets.Scripts.Stacks.Blocks;
 
 namespace Assets.Scripts.Stacks
 {
-    public class StackGenerator : MonoBehaviour
+    public class StackGenerator : MonoBehaviour, IDisposable
     {
         #region Variables
 
         private APIHelper _apiHelper;
+        private List<Stack> _stackList;
+        private StackManager _stackManager;
 
         [SerializeField] private BlockDataSO _blockDataSO;
         [SerializeField] private StackHandler _stackPrefab;
@@ -34,7 +37,7 @@ namespace Assets.Scripts.Stacks
             _apiHelper = new APIHelper();
         }
 
-        private void Dispose()
+        public void Dispose()
         {
             _apiHelper = null;
         }
@@ -60,7 +63,9 @@ namespace Assets.Scripts.Stacks
         public IEnumerator GenerateStacks(StackManager stackManager)
         {
             yield return _apiHelper.GetStackList();
-            List<Stack> stackList = _apiHelper.stackList;
+            _stackList = _apiHelper.stackList;
+
+            _stackManager = stackManager;
 
             Stack loopStack = null;
             Block loopBlock = null;
@@ -68,18 +73,19 @@ namespace Assets.Scripts.Stacks
             StackHandler tempStackHandler = null;
             BlockHandler tempBlockHandler = null;
 
-            for (int i = 0; i < stackList.Count; i++)
+            for (int i = 0; i < _stackList.Count; i++)
             {
-                loopStack = stackList[i];
+                loopStack = _stackList[i];
 
                 if (loopStack != null)
                 {
-                    tempStackHandler = Instantiate(_stackPrefab, stackManager.transform, true);
+                    tempStackHandler = Instantiate(_stackPrefab, _stackManager.transform, true);
                     SetStackPosition(Vector3.right, i, 5f, tempStackHandler);
                     tempStackHandler.Stack = loopStack;
                     tempStackHandler.Initialize();
+                    tempStackHandler.StackGenerator = this;
 
-                    stackManager.AddStack(tempStackHandler);
+                    _stackManager.AddStack(tempStackHandler);
 
                     for (int j = 0; j < loopStack.BlockList.Count; j++)
                     {
@@ -104,7 +110,44 @@ namespace Assets.Scripts.Stacks
                 }
             }
 
-            stackManager.CreateStackUIElements();
+            _stackManager.LateInitialize();
+        }
+
+        public void GenerateStack(StackHandler stackHandler)
+        {
+            Stack loopStack = null;
+            Block loopBlock = null;
+
+            BlockHandler tempBlockHandler = null;
+
+            for (int i = 0; i < _stackList.Count; i++)
+            {
+                loopStack = _stackList[i];
+
+                if (loopStack != null && loopStack.Grade == stackHandler.Stack.Grade)
+                {
+                    for (int j = 0; j < loopStack.BlockList.Count; j++)
+                    {
+                        loopBlock = loopStack.BlockList[j];
+
+                        if (loopBlock != null)
+                        {
+                            tempBlockHandler = _blockDataSO.GetBlockHandlerByMastery(loopBlock.mastery);
+
+                            if (tempBlockHandler != null)
+                            {
+                                tempBlockHandler = Instantiate(tempBlockHandler, stackHandler.transform, true);
+                                tempBlockHandler.Block = loopBlock;
+                                SetBlockPositionAndRotation(stackHandler.transform.position, j, tempBlockHandler);
+
+                                stackHandler.AddBlock(tempBlockHandler);
+                            }
+                        }
+                    }
+
+                    stackHandler.InitializeBlocks();
+                }
+            }
         }
 
         #endregion Functions
