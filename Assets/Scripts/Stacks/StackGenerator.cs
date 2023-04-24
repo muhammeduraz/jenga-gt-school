@@ -54,7 +54,9 @@ namespace Assets.Scripts.Stacks
             blockHandler.transform.rotation = rot;
 
             Vector3 pos = center;
-            pos += (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * 0.05f * Mathf.Pow(-1, (j % 3)) * blockHandler.transform.right + blockHandler.transform.right * Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2)) * blockHandler.BoxCollider.bounds.size.x;
+            float multiplier = Mathf.Pow(-1, (j % 3)) * (((j % 3)) == 2 ? 1 : ((j % 3) % 2));
+
+            pos += multiplier * 0.05f * blockHandler.transform.right + blockHandler.transform.right * multiplier * blockHandler.BoxCollider.bounds.size.x;
             pos += (j / 3) * blockHandler.BoxCollider.bounds.size.y * Vector3.up;
 
             blockHandler.transform.position = pos;
@@ -66,6 +68,11 @@ namespace Assets.Scripts.Stacks
             _stackList = _apiHelper.stackList;
 
             _stackManager = stackManager;
+
+            _stackList[1].BlockList.Sort((Block a, Block b) =>
+            {
+                return a.cluster.CompareTo(b.cluster);
+            });
 
             Stack loopStack = null;
             Block loopBlock = null;

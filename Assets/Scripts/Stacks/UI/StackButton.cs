@@ -41,10 +41,10 @@ namespace Assets.Scripts.Stacks.UI
 
         public void Dispose()
         {
-            _button = null;
             _gradeText = null;
 
             _button.onClick.RemoveAllListeners();
+            _button = null;
         }
 
         public void SetupButton(StackUIHandler stackUIHandler, StackHandler stackHandler)
