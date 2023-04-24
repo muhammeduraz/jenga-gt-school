@@ -3,7 +3,7 @@ using UnityEngine;
 using Assets.Scripts.Stacks;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Stacks
+namespace Assets.Scripts.Stacks.UI
 {
     public class StackUIGenerator : MonoBehaviour, IDisposable
     {
@@ -25,17 +25,12 @@ namespace Assets.Scripts.Stacks
 
         #region Functions
 
-        public void Initialize()
-        {
-
-        }
-
         public void Dispose()
         {
 
         }
 
-        public void CreateUIElements(List<StackHandler> stackHandlerList)
+        public void CreateStackUIElements(List<StackHandler> stackHandlerList, StackUIHandler stackUIHandler)
         {
             StackButton stackButton = null;
             StackHandler stackHandler = null;
@@ -47,7 +42,7 @@ namespace Assets.Scripts.Stacks
                 if (stackHandler != null)
                 {
                     stackButton = Instantiate(_stackButtonPrefab, _buttonParent);
-                    stackButton.SetupButton(stackHandler.Stack.Grade);
+                    stackButton.SetupButton(stackUIHandler, stackHandler);
                 }
             }
         }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Assets.Scripts.API;
 using System.Collections;
+using Assets.Scripts.Stacks.UI;
 using System.Collections.Generic;
 using Assets.Scripts.Stacks.Blocks;
 
@@ -14,22 +15,10 @@ namespace Assets.Scripts.Stacks
 
         [SerializeField] private BlockDataSO _blockDataSO;
         [SerializeField] private StackHandler _stackPrefab;
-        [SerializeField] private StackManager _stackManagerPrefab;
 
         #endregion Variables
 
-        #region Properties
-
-
-
-        #endregion Properties
-
         #region Unity Functions
-
-        private void Awake()
-        {
-            Initialize();
-        }
 
         private void OnDestroy()
         {
@@ -40,11 +29,9 @@ namespace Assets.Scripts.Stacks
 
         #region Functions
 
-        private void Initialize()
+        public void Initialize()
         {
             _apiHelper = new APIHelper();
-
-            StartCoroutine(GenerateStacks());
         }
 
         private void Dispose()
@@ -70,16 +57,13 @@ namespace Assets.Scripts.Stacks
             blockHandler.transform.position = pos;
         }
 
-        private IEnumerator GenerateStacks()
+        public IEnumerator GenerateStacks(StackManager stackManager)
         {
             yield return _apiHelper.GetStackList();
             List<Stack> stackList = _apiHelper.stackList;
 
             Stack loopStack = null;
             Block loopBlock = null;
-
-            StackManager stackManager = Instantiate(_stackManagerPrefab, null);
-            stackManager.Initialize();
 
             StackHandler tempStackHandler = null;
             BlockHandler tempBlockHandler = null;

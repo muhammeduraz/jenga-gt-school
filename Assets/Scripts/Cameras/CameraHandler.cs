@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
+using DG.Tweening;
 using Assets.Scripts.Inputs;
+using Assets.Scripts.Stacks;
 
 namespace Assets.Scripts.Cameras
 {
@@ -17,13 +19,16 @@ namespace Assets.Scripts.Cameras
         public float minDistance;
         public float maxDistance;
 
+        public Vector3 stackMovementOffset;
+
         private float _currentDistance;
         private Vector3 _targetRotation;
         private Vector3 _currentRotation;
 
         public Transform center;
-
         public InputHandler _inputHandler;
+
+        private Tween _movementTween;
 
         #endregion Variables
 
@@ -38,11 +43,6 @@ namespace Assets.Scripts.Cameras
         private void Awake()
         {
             Initialize();
-        }
-
-        private void Update()
-        {
-            
         }
 
         private void OnDisable()
@@ -96,6 +96,13 @@ namespace Assets.Scripts.Cameras
                 _inputHandler.OnLeftFinger -= RotateCamera;
                 _inputHandler.OnLeftFingerUpdate -= ZoomInOut;
             }
+        }
+
+        public void MoveToStack(StackHandler stackHandler)
+        {
+            _movementTween?.Kill();
+            _movementTween = center.DOMove(stackHandler.transform.position + stackMovementOffset, 1f);
+            //_movementTween = center.DOMove(stackHandler.transform.position, 1f).SetUpdate(UpdateType.Late);
         }
 
         #endregion Functions

@@ -81,7 +81,7 @@ namespace Assets.Scripts.Blocks.Detail
                 return;
             }
 
-            Vector3 position = blockHandler.transform.position + (_camera.transform.position - blockHandler.transform.position).normalized * 1f;
+            Vector3 position = blockHandler.transform.position + (_camera.transform.position - blockHandler.transform.position).normalized * 1.5f;
             Quaternion rotation = Quaternion.LookRotation((position - _camera.transform.position).normalized);
 
             _currentBlockHandler = blockHandler;

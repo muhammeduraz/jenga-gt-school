@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.Stacks;
+using Assets.Scripts.Stacks.UI;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Stacks
@@ -11,15 +12,10 @@ namespace Assets.Scripts.Stacks
 
         private List<StackHandler> _stackHandlerList;
 
-        [SerializeField] private StackUIGenerator _stackUIGenerator;
+        [SerializeField] private StackUIHandler _stackUIHandler;
+        [SerializeField] private StackGenerator _stackGenerator;
 
         #endregion Variables
-
-        #region Properties
-
-
-
-        #endregion Properties
 
         #region Unity Functions
 
@@ -40,6 +36,9 @@ namespace Assets.Scripts.Stacks
         public void Initialize()
         {
             _stackHandlerList = new List<StackHandler>();
+
+            _stackGenerator.Initialize();
+            StartCoroutine(_stackGenerator.GenerateStacks(this));
         }
 
         public void Dispose()
@@ -56,7 +55,7 @@ namespace Assets.Scripts.Stacks
 
         public void CreateStackUIElements()
         {
-            _stackUIGenerator.CreateUIElements(_stackHandlerList);
+            _stackUIHandler.CreateStackUIElements(_stackHandlerList);
         }
 
         #endregion Functions
