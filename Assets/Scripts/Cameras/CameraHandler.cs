@@ -9,6 +9,7 @@ namespace Assets.Scripts.Cameras
         #region Variables
 
         public float rotateSpeed;
+        public float rotationLerpSpeed;
 
         public float zoomSpeed;
         public float zoomLerpSpeed;
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Cameras
         public float maxDistance;
 
         private float _currentDistance;
+        private Vector3 _targetRotation;
         private Vector3 _currentRotation;
 
         public Transform center;
@@ -75,10 +77,11 @@ namespace Assets.Scripts.Cameras
 
         private void RotateCamera(InputData inputData)
         {
-            center.Rotate(0f, -inputData.ScreenDelta.x * rotateSpeed, 0f, Space.World);
-            center.Rotate(inputData.ScreenDelta.y * rotateSpeed, 0f, 0f, Space.Self);
+            _targetRotation = inputData.ScreenDelta * rotateSpeed;
+            _currentRotation = Vector3.Lerp(_currentRotation, _targetRotation, rotationLerpSpeed * Time.deltaTime);
 
-            //center.transform.eulerAngles = new Vector3(center.transform.eulerAngles.x, center.transform.eulerAngles.y, 0f);
+            center.Rotate(0f, -_currentRotation.x * rotateSpeed, 0f, Space.World);
+            center.Rotate(_currentRotation.y * rotateSpeed, 0f, 0f, Space.Self);
         }
 
         private void SubscribeEvents(bool subscribe)

@@ -596,6 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 0.5
+  rotationLerpSpeed: 20
   zoomSpeed: 2
   zoomLerpSpeed: 20
   minDistance: 2
