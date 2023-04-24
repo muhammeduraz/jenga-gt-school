@@ -69,11 +69,6 @@ namespace Assets.Scripts.Stacks
 
             _stackManager = stackManager;
 
-            _stackList[1].BlockList.Sort((Block a, Block b) =>
-            {
-                return a.cluster.CompareTo(b.cluster);
-            });
-
             Stack loopStack = null;
             Block loopBlock = null;
 
@@ -133,6 +128,45 @@ namespace Assets.Scripts.Stacks
 
                 if (loopStack != null && loopStack.Grade == stackHandler.Stack.Grade)
                 {
+                    for (int j = 0; j < loopStack.BlockList.Count; j++)
+                    {
+                        loopBlock = loopStack.BlockList[j];
+
+                        if (loopBlock != null)
+                        {
+                            tempBlockHandler = _blockDataSO.GetBlockHandlerByMastery(loopBlock.mastery);
+
+                            if (tempBlockHandler != null)
+                            {
+                                tempBlockHandler = Instantiate(tempBlockHandler, stackHandler.transform, true);
+                                tempBlockHandler.Block = loopBlock;
+                                SetBlockPositionAndRotation(stackHandler.transform.position, j, tempBlockHandler);
+
+                                stackHandler.AddBlock(tempBlockHandler);
+                            }
+                        }
+                    }
+
+                    stackHandler.InitializeBlocks();
+                }
+            }
+        }
+
+        public void GenerateStackWithAscending(StackHandler stackHandler, Comparison<Block> comparison)
+        {
+            Stack loopStack = null;
+            Block loopBlock = null;
+
+            BlockHandler tempBlockHandler = null;
+
+            for (int i = 0; i < _stackList.Count; i++)
+            {
+                loopStack = _stackList[i];
+
+                if (loopStack != null && loopStack.Grade == stackHandler.Stack.Grade)
+                {
+                    loopStack.BlockList.Sort(comparison);
+
                     for (int j = 0; j < loopStack.BlockList.Count; j++)
                     {
                         loopBlock = loopStack.BlockList[j];

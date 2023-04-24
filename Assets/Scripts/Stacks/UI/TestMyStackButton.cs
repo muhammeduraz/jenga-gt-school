@@ -9,6 +9,7 @@ namespace Assets.Scripts.Stacks.UI
         #region Variables
 
         [SerializeField] private Button _button;
+
         [SerializeField] private StackManager _stackManager;
 
         #endregion Variables

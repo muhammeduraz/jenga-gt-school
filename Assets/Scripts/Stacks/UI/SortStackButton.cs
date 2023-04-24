@@ -1,12 +1,23 @@
+using TMPro;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Stacks.Blocks;
 
 namespace Assets.Scripts.Stacks.UI
 {
-    public class ResetStackButton : MonoBehaviour, IDisposable
+    public enum SortType
+    {
+        Domain,
+        Cluster,
+        StandardID
+    }
+
+    public class SortStackButton : MonoBehaviour, IDisposable
     {
         #region Variables
+
+        [SerializeField] private SortType _sortType;
 
         [SerializeField] private Button _button;
 
@@ -39,11 +50,22 @@ namespace Assets.Scripts.Stacks.UI
         public void Dispose()
         {
             _button.onClick.RemoveAllListeners();
+            _button = null;
         }
 
         private void OnButtonClicked()
         {
-            _stackManager.CurrentStackHandler.ResetStack();
+            Comparison<Block> comparison = (Block a, Block b) =>
+            {
+                if (_sortType == SortType.Domain)
+                    return a.domain.CompareTo(b.domain);
+                else if (_sortType == SortType.Cluster)
+                    return a.cluster.CompareTo(b.cluster);
+                else
+                    return a.standardId.CompareTo(b.standardId);
+            };
+
+            _stackManager.CurrentStackHandler.SortStack(comparison);
         }
 
         #endregion Functions

@@ -130,6 +130,14 @@ namespace Assets.Scripts.Stacks
             StackGenerator.GenerateStack(this);
         }
 
+        public void SortStack(Comparison<Block> comparison)
+        {
+            _blockHandlerList.ForEach(block => Destroy(block.gameObject));
+            _blockHandlerList.Clear();
+
+            StackGenerator.GenerateStackWithAscending(this, comparison);
+        }
+
         #endregion Functions
     }
 }
